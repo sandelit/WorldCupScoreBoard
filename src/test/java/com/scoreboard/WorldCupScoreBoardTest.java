@@ -18,8 +18,8 @@ public class WorldCupScoreBoardTest {
     public void testStartGame() {
         scoreBoard.startGame("Argentina", "Algeria");
         assertEquals(1, scoreBoard.getGames().size());
-        assertEquals("Argentina", scoreBoard.getGames().get(0).getHomeTeam());
-        assertEquals("Algeria", scoreBoard.getGames().get(0).getAwayTeam());
+        assertEquals("Argentina", scoreBoard.getGames().getFirst().getHomeTeam());
+        assertEquals("Algeria", scoreBoard.getGames().getFirst().getAwayTeam());
     }
 
     @Test
@@ -33,8 +33,8 @@ public class WorldCupScoreBoardTest {
     public void testUpdateScore() {
         scoreBoard.startGame("Cameroon", "Chile");
         scoreBoard.updateScore("Cameroon", "Chile", 4, 2);
-        assertEquals(4, scoreBoard.getGames().get(0).getHomeScore());
-        assertEquals(2, scoreBoard.getGames().get(0).getAwayScore());
+        assertEquals(4, scoreBoard.getGames().getFirst().getHomeScore());
+        assertEquals(2, scoreBoard.getGames().getFirst().getAwayScore());
     }
 
     @Test
@@ -43,9 +43,9 @@ public class WorldCupScoreBoardTest {
         scoreBoard.startGame("England", "Estonia");
         scoreBoard.updateScore("England", "Estonia", 4, 3);
         scoreBoard.updateScore("Denmark", "Dominican Republic", 5, 2);
-        assertEquals("England",scoreBoard.getSummary().get(-1).getHomeTeam());
-        assertEquals("Estonia",scoreBoard.getSummary().get(-1).getAwayTeam());
-        assertEquals(4, scoreBoard.getSummary().get(-1).getHomeScore());
-        assertEquals(3, scoreBoard.getSummary().get(-1).getAwayScore());
+        assertEquals("England",scoreBoard.getSummary().getLast().getHomeTeam());
+        assertEquals("Estonia",scoreBoard.getSummary().getLast().getAwayTeam());
+        assertEquals(4, scoreBoard.getSummary().getLast().getHomeScore());
+        assertEquals(3, scoreBoard.getSummary().getLast().getAwayScore());
     }
 }

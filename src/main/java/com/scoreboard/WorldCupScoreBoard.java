@@ -1,17 +1,46 @@
 package com.scoreboard;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class WorldCupScoreBoard {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.util.ArrayList;
+import java.util.List;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+public class WorldCupScoreBoard {
+
+    private final List<Game> games;
+
+    public WorldCupScoreBoard() {
+        games = new ArrayList<>();
+    }
+
+    public void startGame(String homeTeam, String awayTeam) {
+        games.add(new Game(homeTeam, awayTeam));
+    }
+
+    public void finishGame(String homeTeam, String awayTeam) {
+        games.removeIf(game -> game.getHomeTeam().equals(homeTeam) && game.getAwayTeam().equals(awayTeam));
+    }
+
+    public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
+        for (Game game : games) {
+            if (game.getHomeTeam().equals(homeTeam) && game.getAwayTeam().equals(awayTeam)) {
+                game.setHomeScore(homeScore);
+                game.setAwayScore(awayScore);
+                break;
+            }
         }
+    }
+
+    public List<Game> getGames() {
+        return new ArrayList<>(games);
+    }
+
+    public List<Game> getSummary() {
+        return games.stream().sorted((g1, g2) -> {
+            int totalScoreComparison = Integer.compare(g2.getTotalScore(), g1.getTotalScore());
+            if (totalScoreComparison == 0) {
+                return Integer.compare(games.indexOf(g1), games.indexOf(g2));
+            }
+            return totalScoreComparison;
+        })
+        .toList();
     }
 }
