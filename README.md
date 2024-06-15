@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `WorldCupScoreBoard` is a simple Java library that manages a scoreboard for football (soccer) matches. It allows you to start new games, finish ongoing games, update scores, and get a summary of games sorted by total score and insertion order. This implementation uses Java records for immutability and conciseness.
+The `WorldCupScoreBoard` is a simple Java library that manages a scoreboard for football matches. It allows you to start new games, finish ongoing games, update scores, and get a summary of games sorted by total score and insertion order.
 
 ## Features
 
