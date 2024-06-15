@@ -1,7 +1,10 @@
 package com.scoreboard;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class WorldCupScoreBoard {
 
@@ -16,17 +19,18 @@ public class WorldCupScoreBoard {
     }
 
     public void finishGame(String homeTeam, String awayTeam) {
-        games.removeIf(game -> game.getHomeTeam().equals(homeTeam) && game.getAwayTeam().equals(awayTeam));
+        games.removeIf(game -> game.homeTeam().equals(homeTeam) && game.awayTeam().equals(awayTeam));
     }
 
     public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
-        for (Game game : games) {
-            if (game.getHomeTeam().equals(homeTeam) && game.getAwayTeam().equals(awayTeam)) {
-                game.setHomeScore(homeScore);
-                game.setAwayScore(awayScore);
-                break;
-            }
-        }
+        Optional<Game> gameToUpdate = games.stream()
+                .filter(game -> game.homeTeam().equals(homeTeam) && game.awayTeam().equals(awayTeam))
+                .findFirst();
+
+        gameToUpdate.ifPresent(game -> {
+            int index = games.indexOf(game);
+            games.set(index, game.withScores(homeScore, awayScore));
+        });
     }
 
     public List<Game> getGames() {
@@ -34,13 +38,11 @@ public class WorldCupScoreBoard {
     }
 
     public List<Game> getSummary() {
-        return games.stream().sorted((g1, g2) -> {
-            int totalScoreComparison = Integer.compare(g2.getTotalScore(), g1.getTotalScore());
-            if (totalScoreComparison == 0) {
-                return Integer.compare(games.indexOf(g1), games.indexOf(g2));
-            }
-            return totalScoreComparison;
-        })
-        .toList();
+        return games.stream()
+                .sorted(Comparator
+                        .comparingInt(Game::getTotalScore)
+                        .reversed()
+                        .thenComparing(game -> -games.indexOf(game)))
+                .collect(Collectors.toList());
     }
 }

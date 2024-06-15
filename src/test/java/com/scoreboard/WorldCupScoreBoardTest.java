@@ -3,6 +3,8 @@ package com.scoreboard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WorldCupScoreBoardTest {
@@ -18,8 +20,8 @@ public class WorldCupScoreBoardTest {
     public void testStartGame() {
         scoreBoard.startGame("Argentina", "Algeria");
         assertEquals(1, scoreBoard.getGames().size());
-        assertEquals("Argentina", scoreBoard.getGames().getFirst().getHomeTeam());
-        assertEquals("Algeria", scoreBoard.getGames().getFirst().getAwayTeam());
+        assertEquals("Argentina", scoreBoard.getGames().getFirst().homeTeam());
+        assertEquals("Algeria", scoreBoard.getGames().getFirst().awayTeam());
     }
 
     @Test
@@ -33,8 +35,8 @@ public class WorldCupScoreBoardTest {
     public void testUpdateScore() {
         scoreBoard.startGame("Cameroon", "Chile");
         scoreBoard.updateScore("Cameroon", "Chile", 4, 2);
-        assertEquals(4, scoreBoard.getGames().getFirst().getHomeScore());
-        assertEquals(2, scoreBoard.getGames().getFirst().getAwayScore());
+        assertEquals(4, scoreBoard.getGames().getFirst().homeScore());
+        assertEquals(2, scoreBoard.getGames().getFirst().awayScore());
     }
 
     @Test
@@ -43,9 +45,12 @@ public class WorldCupScoreBoardTest {
         scoreBoard.startGame("England", "Estonia");
         scoreBoard.updateScore("England", "Estonia", 4, 3);
         scoreBoard.updateScore("Denmark", "Dominican Republic", 5, 2);
-        assertEquals("England",scoreBoard.getSummary().getLast().getHomeTeam());
-        assertEquals("Estonia",scoreBoard.getSummary().getLast().getAwayTeam());
-        assertEquals(4, scoreBoard.getSummary().getLast().getHomeScore());
-        assertEquals(3, scoreBoard.getSummary().getLast().getAwayScore());
+
+        List<Game> summary = scoreBoard.getSummary();
+
+        assertEquals("England",summary.getFirst().homeTeam());
+        assertEquals("Estonia",summary.getFirst().awayTeam());
+        assertEquals(4, summary.getFirst().homeScore());
+        assertEquals(3, summary.getFirst().awayScore());
     }
 }
