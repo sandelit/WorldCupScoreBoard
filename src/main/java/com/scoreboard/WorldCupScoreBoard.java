@@ -45,4 +45,18 @@ public class WorldCupScoreBoard {
                         .thenComparing(game -> -games.indexOf(game)))
                 .collect(Collectors.toList());
     }
+
+    public String getFormattedSummary() {
+        List<Game> summary = getSummary();
+
+        StringBuilder formattedSummary = new StringBuilder();
+        for (int i = 0; i < summary.size(); i++) {
+            formattedSummary.append(i + 1)
+                    .append(". ")
+                    .append(summary.get(i))
+                    .append("\n");
+        }
+
+        return formattedSummary.toString().trim();
+    }
 }

@@ -53,4 +53,27 @@ public class WorldCupScoreBoardTest {
         assertEquals(4, summary.getFirst().homeScore());
         assertEquals(3, summary.getFirst().awayScore());
     }
+
+    @Test
+    public void testGetFormattedSummary() {
+        scoreBoard.startGame("Mexico", "Canada");
+        scoreBoard.updateScore("Mexico", "Canada", 0, 5);
+        scoreBoard.startGame("Spain", "Brazil");
+        scoreBoard.updateScore("Spain", "Brazil", 10, 2);
+        scoreBoard.startGame("Germany", "France");
+        scoreBoard.updateScore("Germany", "France", 2, 2);
+        scoreBoard.startGame("Uruguay", "Italy");
+        scoreBoard.updateScore("Uruguay", "Italy", 6, 6);
+        scoreBoard.startGame("Argentina", "Australia");
+        scoreBoard.updateScore("Argentina", "Australia", 3, 1);
+
+        String expectedFormattedString = """
+                1. Uruguay 6 - Italy 6
+                2. Spain 10 - Brazil 2
+                3. Mexico 0 - Canada 5
+                4. Argentina 3 - Australia 1
+                5. Germany 2 - France 2""";
+
+        assertEquals(expectedFormattedString, scoreBoard.getFormattedSummary());
+    }
 }
