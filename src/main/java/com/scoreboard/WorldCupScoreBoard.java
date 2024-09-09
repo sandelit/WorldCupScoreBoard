@@ -26,8 +26,10 @@ public class WorldCupScoreBoard {
      * @param homeTeam the home team
      * @param awayTeam the away team
      */
-    public void startGame(String homeTeam, String awayTeam) {
-        games.add(new Game(homeTeam, awayTeam));
+    public void startGame(String homeTeam, String awayTeam, String continent) {
+        if (homeTeam != null && awayTeam != null && continent != null) {
+            games.add(new Game(homeTeam, awayTeam, continent));
+        }
     }
 
     /**
@@ -75,10 +77,12 @@ public class WorldCupScoreBoard {
      */
     public List<Game> getSummary() {
         return games.stream()
-                .sorted(Comparator
-                        .comparingInt(Game::getTotalScore)
+                .sorted(Comparator.comparing(Game::continent)
                         .reversed()
-                        .thenComparing(game -> -games.indexOf(game))) // LIFO for games with same score
+                        .thenComparing(Game::getTotalScore)
+                        .reversed()
+                        .thenComparing(game -> -games.indexOf(game))
+                )
                 .collect(Collectors.toList());
     }
 

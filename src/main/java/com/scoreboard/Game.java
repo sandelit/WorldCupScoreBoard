@@ -3,15 +3,15 @@ package com.scoreboard;
 /**
  * Represents a football game with home team name and score, as well as away team name and score.
  */
-public record Game(String homeTeam, String awayTeam, int homeScore, int awayScore) {
+public record Game(String homeTeam, String awayTeam, int homeScore, int awayScore, String continent) {
     /**
      * Constructs new game with specified teams and score of 0-0.
      *
      * @param homeTeam the home team
      * @param awayTeam the away team
      */
-    public Game(String homeTeam, String awayTeam) {
-        this(homeTeam, awayTeam, 0, 0);
+    public Game(String homeTeam, String awayTeam, String continent) {
+        this(homeTeam, awayTeam, 0, 0, continent);
     }
 
     /**
@@ -31,7 +31,7 @@ public record Game(String homeTeam, String awayTeam, int homeScore, int awayScor
      * @return a new game with the updated scores
      */
     public Game withScores(int homeScore, int awayScore) {
-        return new Game(homeTeam, awayTeam, homeScore, awayScore);
+        return new Game(homeTeam, awayTeam, homeScore, awayScore, continent);
     }
 
     /**
